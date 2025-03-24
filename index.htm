@@ -4,46 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>Task Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #5085ba;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .task-manager {
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 20px;
+            
+            border-radius: 14px;
+            
+        }
+
+        .task-list {
+            margin-top: 20px;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #6e98c2;
+        }
+    </style>
 </head>
 
+<body >
+    <div class="container">
+        <div class="task-manager">
+            <h2 class="text-center mb-4">
+                <span role="img" ></span> Task Manager
+            </h2>
+            <div class="input-group mb-3">
+                <input type="text" id="taskInput" class="form-control" placeholder="Enter a task to do ">
+                <button class="btn btn-success" type="button" id="addTaskBtn">Add Task</button>
+            </div>
+            <ul id="taskList" class="list-group task-list"></ul>
+        </div>
+    </div>
 
-<body>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskText = taskInput.value.trim();
 
-     <div>
-        <h1>Task Manager </h1>
-     </div>
-    <input type="text" id="input">
-    <button type="submit" id="one" class="btn btn-success">Add Task</button>
-    <button type="reset" id="two" class="btn btn-danger">Delete</button>
-    <script type="text/javascript">
-        input = document.getElementById("input");
+            if (taskText !== '') {
+                const taskList = document.getElementById('taskList');
+                const li = document.createElement('li');
+                li.className = 'list-group-item task-item';
+                li.innerHTML = `
+                    ${taskText}
+                    <button class="btn btn-danger btn-sm float-end delete-btn">Delete</button>
+                `;
+                taskList.appendChild(li);
+                taskInput.value = ''; 
 
-        ul = document.createElement("ul");
+                li.querySelector('.delete-btn').addEventListener('click', function () {
+                    taskList.removeChild(li);
+                });
+            }
+        }
+        document.getElementById('addTaskBtn').addEventListener('click', addTask);
 
-        document.querySelector("#one").addEventListener("click", function () {
-
-            let li = document.createElement("li");
-            
-            result = document.getElementById("input").value;
-            console.log(result);
-            li.textContent = result;
-            ul.appendChild(li);
-            console.log(ul);
-            document.body.appendChild(ul);
-
-        })
-        document.querySelector("#two").addEventListener("click", function () {
-
-            ul.innerHTML="";
-
-        })
-
+        document.getElementById('taskInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
     </script>
 </body>
 
 </html>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
